@@ -8,12 +8,14 @@ android {
     namespace = "com.aht.sugerledger"
     compileSdk = 35
 
+
     defaultConfig {
         applicationId = "com.aht.sugerledger"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        buildToolsVersion = "34.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
