@@ -1,6 +1,5 @@
 package com.aht.sugerledger.ui.auth
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,35 +22,25 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -61,18 +50,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aht.sugerledger.R
 import com.aht.sugerledger.ui.theme.BrandOrange
-import com.aht.sugerledger.ui.theme.IconColor
 import com.aht.sugerledger.ui.theme.SugerLedgerTheme
 
 @Composable
 fun SignInScreen(
-    onSignupClick : () -> Unit,
-    onSigninClick : () -> Unit
+    onSignupClick: () -> Unit,
+    onSigninClick: () -> Unit
 ) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
-    var selectedTab by rememberSaveable { mutableStateOf(0) } // 0 = Login, 1 = Register
+    var selectedTab by rememberSaveable { mutableStateOf(0) }
     var rememberMe by rememberSaveable { mutableStateOf(false) }
 
     SignInContent(
@@ -90,33 +78,31 @@ fun SignInScreen(
         onSignInClick = onSigninClick,
         modifier = Modifier.fillMaxSize()
     )
-
 }
 
 @Composable
-fun SignInContent (
-    email : String,
-    password : String,
-    passwordVisibility : Boolean,
-    selectedTab : Int  = 0,
-    rememberMe : Boolean = false,
-    onEmailChange : (String) -> Unit,
-    onPasswordChange : (String) -> Unit,
-    onPasswordVisibilityChange : () -> Unit,
-    onTabSelected : (Int) -> Unit,
-    onRememberMeChange  : (Boolean) -> Unit,
-    onSignUpClick : () -> Unit,
-    onSignInClick : () -> Unit,
+fun SignInContent(
+    email: String,
+    password: String,
+    passwordVisibility: Boolean,
+    selectedTab: Int = 0,
+    rememberMe: Boolean = false,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onPasswordVisibilityChange: () -> Unit,
+    onTabSelected: (Int) -> Unit,
+    onRememberMeChange: (Boolean) -> Unit,
+    onSignUpClick: () -> Unit,
+    onSignInClick: () -> Unit,
     modifier: Modifier
 ) {
     Column(
         modifier = modifier
-            .background(color = Color.White)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(vertical = 20.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // بخش تب‌سوئیچر پاتیلی شکل
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -128,7 +114,6 @@ fun SignInContent (
                 ),
             horizontalArrangement = Arrangement.Center
         ) {
-            // تب لاگین
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -157,7 +142,6 @@ fun SignInContent (
                 }
             }
 
-            // تب رجیستر
             Box(
                 modifier = Modifier
                     .weight(1f)
@@ -187,7 +171,6 @@ fun SignInContent (
             }
         }
 
-        // بخش آیکون و هدر اپلیکیشن
         Image(
             painter = painterResource(id = R.drawable.app_icon),
             contentDescription = "Sugar Ledger Icon",
@@ -205,7 +188,6 @@ fun SignInContent (
             modifier = Modifier.padding(bottom = 12.dp)
         )
 
-        // بخش فیلدهای ورودی متناسب با پدینگ استاندارد دکمه‌ها
         OutlinedTextField(
             value = email,
             onValueChange = onEmailChange,
@@ -225,7 +207,6 @@ fun SignInContent (
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
-                // استفاده از آیکون‌های استاندارد چشم برای دیدن پسورد
                 val image = if (passwordVisibility) Icons.Default.Lock else Icons.Default.Info
                 IconButton(onClick = onPasswordVisibilityChange) {
                     Icon(imageVector = image, contentDescription = "Toggle Password Visibility")
@@ -236,7 +217,6 @@ fun SignInContent (
                 .padding(horizontal = 32.dp)
         )
 
-        // بخش چک‌باکس و رمز عبور فراموش شده (با انیمیشن تغییر وضعیت تب)
         if (selectedTab == 0) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -257,11 +237,9 @@ fun SignInContent (
                 }
             }
         } else {
-            // ایجاد یک پدینگ تعادلی برای زمانی که تب رجیستر باز است تا صفحه پرش نکند
             Spacer(modifier = Modifier.height(48.dp))
         }
 
-        // دکمه اصلی عملیات (ورود / ثبت‌نام) تغییر نام پویا بر اساس تب انتخاب شده
         OutlinedButton(
             onClick = { if (selectedTab == 0) onSignInClick() else onSignUpClick() },
             modifier = Modifier
@@ -281,7 +259,6 @@ fun SignInContent (
             )
         }
 
-        // خط جداکننده OR
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -298,9 +275,8 @@ fun SignInContent (
             HorizontalDivider(modifier = Modifier.weight(1f))
         }
 
-        // دکمه گوگل کاملاً شکیل و ریپوزیشنی
         OutlinedButton(
-            onClick = { /* Handle Google Sign In */ },
+            onClick = onSignInClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
@@ -331,7 +307,6 @@ fun SignInContent (
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // بخش فوتر امنیتی دیتا
         Row(
             modifier = Modifier.padding(horizontal = 32.dp),
             verticalAlignment = Alignment.Top,
@@ -355,12 +330,12 @@ fun SignInContent (
 
 @Preview("default")
 @Composable
-private fun SignInPreview () {
+private fun SignInPreview() {
     SugerLedgerTheme {
         SignInContent(
-            "amirhossin@gamilc.con",
-            "amir1234",
-            false,
+            email = "amirhossin@gamilc.con",
+            password = "amir1234",
+            passwordVisibility = false,
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordVisibilityChange = {},
